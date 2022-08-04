@@ -1,0 +1,31 @@
+body {
+    display: flex;
+    justify-content: center;
+    background-color:  white;
+}    
+
+main {
+    display: grid;
+    grid-template: 1fr 1fr/ 1fr 1fr 1fr;
+    width: 90vw;
+    align-content: center;
+    background-color: azure;
+    border: 1px solid black;
+    height: 100vh;
+}
+
+#input {
+    align-content: center;
+}
+
+.bookCard {
+    border: 2px solid black;
+    border-radius: 5%;
+    padding: 10px;
+    margin: 10px;
+    background-color: white;
+}
+
+#popUp {
+    display: none;
+}
