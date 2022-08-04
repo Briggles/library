@@ -2,10 +2,10 @@ let myLibrary = [];
 const documentBooks = document.querySelector("#main");
 const newBookBtn = document.querySelector("#newBook");
 const popUpStatus = document.querySelector("#popUp");
+const addBookBtn = document.querySelector("#addBtn");
 
 firstBook = new Book("The Hobbit", "Tolkein", 695, true);
 secondBook = new Book("The Cat and the Hat", "Dr. Seuss", 22, false);
-console.log(firstBook);
 addBookToLibrary(firstBook, myLibrary);
 addBookToLibrary(secondBook, myLibrary);
 displayBooks(myLibrary);
@@ -14,6 +14,20 @@ newBookBtn.addEventListener("click", () => {
     popUpStatus.style.display = 'block';
     console.log("new book button pressed.")
 });
+
+addBookBtn.addEventListener("click", () => {
+    popUpStatus.style.display = 'none';
+
+    newBook = new Book(
+      document.getElementById('title').value, 
+      document.getElementById('author').value,
+      document.getElementById('pages').value,
+      document.getElementById('read').value
+    )
+    addBookToLibrary(newBook, myLibrary);
+    displayBooks(myLibrary);
+});
+
 function Book(title, author, pages, haveRead) {
     this.title = title;
     this.author = author;
@@ -49,6 +63,3 @@ function createCard() {
   return cardID;
 }
 
-function addBookForm(j) {
-// Create a form to specify book details?
-}
