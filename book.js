@@ -12,19 +12,20 @@ displayBooks(myLibrary);
 
 newBookBtn.addEventListener("click", () => {
     popUpStatus.style.display = 'block';
-    console.log("new book button pressed.")
-});
+  });
 
 addBookBtn.addEventListener("click", () => {
     popUpStatus.style.display = 'none';
-
+   
     newBook = new Book(
       document.getElementById('title').value, 
       document.getElementById('author').value,
       document.getElementById('pages').value,
-      document.getElementById('read').value
+      document.getElementById('read').checked 
     )
+    console.log("read: " + document.getElementById('read').value);
     addBookToLibrary(newBook, myLibrary);
+    clearDisplay(myLibrary);
     displayBooks(myLibrary);
 });
 
@@ -46,14 +47,40 @@ function addBookToLibrary(book, library) {
   library.push(book);
 }
 
+function removeBookFromLibrary(book, library) {
+  console.log("splicing " + book);
+  library.splice(book,1);
+  clearDisplay(library);
+  displayBooks(library);
+}
+function clearDisplay(library) {
+while (documentBooks.firstChild) {
+  documentBooks.removeChild(documentBooks.lastChild);
+}}
+
 function displayBooks(library) {
   for (i = 0; i < library.length; i++) {
+    console.log(i);
     currentCard = documentBooks.appendChild(createCard());
+    currentCard.id = "card" + i;
     currentCard.textContent = 
     library[i].title + " by " +
     library[i].author + ", " +
     library[i].pages + " pages.  Already read: " +
     library[i].haveRead;
+    let button =  document.createElement("button");
+    let node = document.createTextNode("Remove Book");
+    button.id =  i;
+    button.addEventListener("click", () => {
+      console.log("removing book " + button.id + " kappa");   
+      removeBookFromLibrary(button.id, myLibrary);
+    });
+    console.log(i);
+    button.appendChild(node);
+    const para = document.createElement("p");
+    currentCard.appendChild(para);
+    currentCard.appendChild(button);
+    
   }
 }
 
