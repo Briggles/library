@@ -53,10 +53,18 @@ function removeBookFromLibrary(book, library) {
   clearDisplay(library);
   displayBooks(library);
 }
+
 function clearDisplay(library) {
 while (documentBooks.firstChild) {
   documentBooks.removeChild(documentBooks.lastChild);
 }}
+
+function toggleReadStatus(id, isChecked, library) {
+  console.log("id:" + id + "isChecked: " + isChecked);
+  library[id].haveRead = isChecked;
+  clearDisplay(library);
+  displayBooks(library);
+}
 
 function displayBooks(library) {
   for (i = 0; i < library.length; i++) {
@@ -72,13 +80,24 @@ function displayBooks(library) {
     let node = document.createTextNode("Remove Book");
     button.id =  i;
     button.addEventListener("click", () => {
-      console.log("removing book " + button.id + " kappa");   
       removeBookFromLibrary(button.id, myLibrary);
     });
-    console.log(i);
     button.appendChild(node);
     const para = document.createElement("p");
+    para.textContent = "Was Read: ";
+    const isReadCheckBox = document.createElement("input");
+    isReadCheckBox.type = "checkbox";
+    isReadCheckBox.id = "check" + i;
+    isReadCheckBox.value = "yes";
+    if (library[i].haveRead == true) isReadCheckBox.checked = true;
+    else isReadCheckBox.checked = false;
+    isReadCheckBox.addEventListener("click", () => {
+      strippedID = isReadCheckBox.id.replace('check', '');
+      console.log("Is this checked: " + isReadCheckBox.checked);
+      toggleReadStatus(strippedID, isReadCheckBox.checked, myLibrary);
+    });
     currentCard.appendChild(para);
+    para.appendChild(isReadCheckBox);
     currentCard.appendChild(button);
     
   }
